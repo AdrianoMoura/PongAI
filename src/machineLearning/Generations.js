@@ -46,21 +46,22 @@ export default class Generations {
         this.avgScoreDiff = avgScore - this.avgScore;
         this.avgScore = avgScore;
 
-        // Make score exponentially better
-        this.species.forEach(creature => creature.expScore = Math.pow(creature.score, 2))
+        // Make score exponentially better, score is prioritary  but time lived was important to
+        this.species.forEach(creature => creature.expScore = Math.pow(creature.score * 2 + creature.time, 2))
         const totalScoreExponential = this.species.reduce((total, creature) => total += creature.expScore, 0)
 
         // Assign Fitness to each creature
         this.species.forEach((creature) => creature.fitness = creature.expScore / totalScoreExponential)
 
         // Preserve best Specimen
-        const bestSpecimen = this.species.reduce((prev, current) => current.fitness > prev.fitness ? current : prev)
-        this.bestSpecimen && this.bestSpecimen.brain.dispose()
-        this.bestSpecimen = bestSpecimen.clone()
-        bestSpecimen.brain.dispose()
+        const bestSpecimen = this.species.reduce((prev, current) => current.score > prev.score ? current : prev)
+        if (!this.bestSpecimen || bestSpecimen.score > this.bestSpecimen.score) {
+            this.bestSpecimen && this.bestSpecimen.brain.dispose()
+            this.bestSpecimen = bestSpecimen.clone()
+        }
 
         // Create a new generation
-        const new_species = this.species.map(() => {
+        let new_species = Array.from({ length: this.population - 1 }, () => {
             const parentA = this.pickOne()
             const parentB = this.pickOne()
             const child = parentA.crossover(parentB)
@@ -69,7 +70,9 @@ export default class Generations {
             parentB.brain.dispose()
             return child
         })
-        
+
+        new_species.push(this.bestSpecimen.clone())
+
         this.species.forEach(s => s.brain.dispose())
 
         this.species = new_species
@@ -90,8 +93,8 @@ export default class Generations {
         if (this.actualSpecimenBeeingTrained < this.species.length - 1) {
             this.actualSpecimenBeeingTrained++
             gameController.startNew()
-            
-            enemy.accel = 5
+
+            enemy.accel = 10
         } else {
             // If this training reaches the end of the specimen start the evolving
             this.evolve()
@@ -120,7 +123,7 @@ export default class Generations {
 
         player.brain.layers_weights = playerLayers
 
-        
+
         this.generation = 1
         this.population = 1
         this.highScore = 0
@@ -131,7 +134,7 @@ export default class Generations {
 
         this.species.forEach(s => s.brain.dispose())
         this.species = [player]
-        
+
         gameController.startNew()
         this.isEvolving = false
     }
@@ -143,7 +146,7 @@ export default class Generations {
             const playerLayers = player.brain.layers_weights.map((el, layer_index) => {
                 const shape = el.shape
                 const layer = species_array[player_index][layer_index]
-    
+
                 return tf.tensor(layer, shape)
             })
             player.brain.dispose()
@@ -165,7 +168,7 @@ export default class Generations {
 
         this.species.forEach(s => s.brain.dispose())
         this.species = species
-        
+
         gameController.startNew()
         this.isEvolving = false
     }

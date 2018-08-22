@@ -30,6 +30,7 @@ export default class Ball {
         } else if (this.pos.y > canvasHeight - this.height) {
             this.bounce(0, -1)
         } else if (this.pos.x < 10) {
+            generation.getActualSpecimen().die()
             generation.goToNextSpecimen()
         } else if (this.pos.x > canvasWidth - 10) {
             gameController.makePoint()

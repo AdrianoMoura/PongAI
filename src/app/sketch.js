@@ -29,7 +29,7 @@ const sketch = (p5) => {
         window.slider = p5.createSlider(1, 100, 1)
 
         // Create a generation
-        window.generation = new Generations(10)
+        window.generation = new Generations(100)
         window.enemy = new Enemy()
         window.ball = new Ball()
 
@@ -86,7 +86,7 @@ const sketch = (p5) => {
         p5.text(
             `
             Generation:_____ ${generation.generation}
-            Specimen:_______ ${generation.actualSpecimenBeeingTrained + 1}/${generation.population}
+            Specimen:_______ ${generation.actualSpecimenBeeingTrained + 1}/${generation.species.length}
             HighScore:______ ${generation.highScore}\n
             Last Generation:
             HighScore:______ ${generation.generationHighscore}

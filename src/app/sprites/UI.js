@@ -28,13 +28,18 @@ export default class UI {
     }
 
     savePlayer() {
-        p5.saveJSON(generation.getBetterSpecimen().brain.layers_weights.map(layer =>  layer.dataSync()), 'bestSpecimen.json');
+        p5.saveJSON({
+            score: generation.getBetterSpecimen().score,
+            time: generation.getBetterSpecimen().time,
+            fitness: generation.getBetterSpecimen().fitness,
+            layers: generation.getBetterSpecimen().brain.layers_weights.map(layer =>  layer.dataSync())
+        }, 'bestSpecimen.json');
     }
 
     loadPlayerFile() {
         p5.loadJSON('bestSpecimen.json', (data) => {
             // Create a generation
-            const arrayData = data.map(layer => Object.keys(layer).map(value => layer[value]))
+            const arrayData = data.layers.map(layer => Object.keys(layer).map(value => layer[value]))
             generation.runFromPlayerData(arrayData, Player)
         });
     }
