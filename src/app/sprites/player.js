@@ -13,7 +13,7 @@ export default class Player {
         this.time = 0
         this.pos = p5.createVector(20, canvasHeight / 2 - this.height / 2)
         this.vel = p5.createVector(0, 0)
-        this.accel = 20
+        this.accel = 10
     }
 
     keyboardListener() {
