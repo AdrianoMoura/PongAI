@@ -46,8 +46,8 @@ export default class Generations {
         this.avgScoreDiff = avgScore - this.avgScore;
         this.avgScore = avgScore;
 
-        // Make score exponentially better, score is prioritary  but time lived was important to
-        this.species.forEach(creature => creature.expScore = Math.pow(creature.score * 2 + creature.time, 2))
+        // Make score exponentially better
+        this.species.forEach(creature => creature.expScore = Math.pow(creature.score, 2))
         const totalScoreExponential = this.species.reduce((total, creature) => total += creature.expScore, 0)
 
         // Assign Fitness to each creature
@@ -55,7 +55,7 @@ export default class Generations {
 
         // Preserve best Specimen
         const bestSpecimen = this.species.reduce((prev, current) => current.score > prev.score ? current : prev)
-        if (!this.bestSpecimen || bestSpecimen.score > this.bestSpecimen.score) {
+        if (!this.bestSpecimen || bestSpecimen.score >= this.bestSpecimen.score) {
             this.bestSpecimen && this.bestSpecimen.brain.dispose()
             this.bestSpecimen = bestSpecimen.clone()
         }
@@ -94,7 +94,7 @@ export default class Generations {
             this.actualSpecimenBeeingTrained++
             gameController.startNew()
 
-            enemy.accel = 10
+            enemy.accel = 8
         } else {
             // If this training reaches the end of the specimen start the evolving
             this.evolve()

@@ -3,7 +3,7 @@ export default class Enemy {
         this.width = 20
         this.height = 100
         this.reset()
-        this.accel = 5
+        this.accel = 8
     }
 
     think() {
