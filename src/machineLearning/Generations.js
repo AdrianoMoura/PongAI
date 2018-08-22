@@ -94,7 +94,7 @@ export default class Generations {
             this.actualSpecimenBeeingTrained++
             gameController.startNew()
 
-            enemy.accel = 8
+            enemy.accel = 6
         } else {
             // If this training reaches the end of the specimen start the evolving
             this.evolve()
