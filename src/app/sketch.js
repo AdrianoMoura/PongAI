@@ -73,10 +73,10 @@ const sketch = (p5) => {
 
         // Show actual score
         p5.textSize(48);
-        p5.textAlign(p5.right);
-        p5.text(player.score, canvasWidth / 2 - 30, 100);
+        p5.textAlign(p5.RIGHT);
+        p5.text(player.score, canvasWidth / 2 - 20, 100);
 
-        p5.textAlign(p5.left);
+        p5.textAlign(p5.LEFT);
         p5.text(0, canvasWidth / 2 + 30, 100);
 
 
