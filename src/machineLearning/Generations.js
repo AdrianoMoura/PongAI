@@ -43,7 +43,7 @@ export default class Generations {
 
         // Calculate average score of this Generation
         const avgScore = totalScore / this.population
-        this.avgScoreDiff = avgScore - this.avgScore;
+        this.avgScoreDiff = avgScore - this.avgScore
         this.avgScore = avgScore;
 
         // Make score exponentially better
@@ -54,8 +54,8 @@ export default class Generations {
         this.species.forEach((creature) => creature.fitness = creature.expScore / totalScoreExponential)
 
         // Preserve best Specimen
-        const bestSpecimen = this.species.reduce((prev, current) => current.score > prev.score ? current : prev)
-        if (!this.bestSpecimen || bestSpecimen.score >= this.bestSpecimen.score) {
+        const bestSpecimen = this.species.reduce((prev, current) => current.fitness > prev.fitness ? current : prev)
+        if (!this.bestSpecimen || bestSpecimen.fitness >= this.bestSpecimen.fitness) {
             this.bestSpecimen && this.bestSpecimen.brain.dispose()
             this.bestSpecimen = bestSpecimen.clone()
         }
@@ -134,6 +134,8 @@ export default class Generations {
 
         this.species.forEach(s => s.brain.dispose())
         this.species = [player]
+
+        enemy.accel = 6
 
         gameController.startNew()
         this.isEvolving = false

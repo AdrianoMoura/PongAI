@@ -10,6 +10,15 @@ Start
 $ npm start
 ```
 
+
+![Generation Start Sample](sample1.gif)
+The start of first generation
+
+![Generation Best Sample](sample2.gif)
+A sample of a good player
+
+> To continue to run a saved generation or repeat the best specimen put the saved file into the static folder
+
 ## References
 - [p5.js](https://p5js.org/)
 - [TensorFlow.js](https://js.tensorflow.org)
