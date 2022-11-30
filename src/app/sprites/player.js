@@ -6,7 +6,7 @@ export default class Player {
 
         this.width = 20
         this.height = 100
-        this.brain = new NeuralNetwork(5, 100, 1)
+        this.brain = new NeuralNetwork(8, 100, 1)
         this.fitness = 0
         this.score = 0
         this.start = p5.millis()
@@ -38,8 +38,11 @@ export default class Player {
         const velY = ball.force.y
         const posY = ball.pos.y
         const myPos = this.pos.y
+        const myVelY = this.vel.y
+        const enemyPosY = enemy.pos.y
+        const enemyVelY = enemy.vel.y
 
-        const output = this.brain.predict([dist, velX, velY, posY, myPos])
+        const output = this.brain.predict([dist, velX, velY, posY, myPos, myVelY, enemyPosY, enemyVelY])
 
         const direction = output[0]
 

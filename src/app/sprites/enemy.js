@@ -4,6 +4,7 @@ export default class Enemy {
         this.height = 100
         this.reset()
         this.accel = 6
+        this.vel;
     }
 
     think() {
