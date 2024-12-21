@@ -11,19 +11,19 @@ export default class UI {
 
     show() {
         // Save 
-        this.saveButton.position(20, canvasHeight+40);
+        this.saveButton.position(20, canvasHeight + 40);
         this.saveButton.elt.addEventListener('click', this.savePlayer);
-        
+
         // Load
-        this.loadPlayer.position(20, canvasHeight+70);
+        this.loadPlayer.position(20, canvasHeight + 70);
         this.loadPlayer.elt.addEventListener('click', this.loadPlayerFile);
-        
+
         // Save progress
-        this.saveProgress.position(20, canvasHeight+130);
+        this.saveProgress.position(20, canvasHeight + 130);
         this.saveProgress.elt.addEventListener('click', this.saveGeneration);
-        
+
         // Load Progress
-        this.loadProgress.position(20, canvasHeight+160);
+        this.loadProgress.position(20, canvasHeight + 160);
         this.loadProgress.elt.addEventListener('click', this.loadGenerationFile);
     }
 
@@ -32,7 +32,7 @@ export default class UI {
             score: generation.getBetterSpecimen().score,
             time: generation.getBetterSpecimen().time,
             fitness: generation.getBetterSpecimen().fitness,
-            layers: generation.getBetterSpecimen().brain.layers_weights.map(layer =>  layer.dataSync())
+            layers: generation.getBetterSpecimen().brain.layers_weights.map(layer => layer.dataSync())
         }, 'bestSpecimen.json');
     }
 
@@ -41,6 +41,7 @@ export default class UI {
             // Create a generation
             const arrayData = data.layers.map(layer => Object.keys(layer).map(value => layer[value]))
             generation.runFromPlayerData(arrayData, Player)
+            enemy.accel = 6
         });
     }
 
@@ -48,12 +49,12 @@ export default class UI {
         p5.saveJSON({
             generation: generation.generation,
             population: generation.population,
-            species: generation.species.map(speciment => speciment.brain.layers_weights.map(layer =>  layer.dataSync()))
+            species: generation.species.map(speciment => speciment.brain.layers_weights.map(layer => layer.dataSync()))
         }, 'generation.json');
     }
 
     loadGenerationFile(file) {
-        
+
         p5.loadJSON('generation.json', (data) => {
             // Create a generation
             const generationNumber = data.generation

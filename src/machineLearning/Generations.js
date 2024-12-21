@@ -61,7 +61,7 @@ export default class Generations {
         }
 
         // Create a new generation
-        let new_species = Array.from({ length: this.population - 1 }, () => {
+        const new_species = Array.from({ length: this.population - 1 }, () => {
             const parentA = this.pickOne()
             const parentB = this.pickOne()
             const child = parentA.crossover(parentB)
@@ -136,8 +136,6 @@ export default class Generations {
 
         this.species.forEach(s => s.brain.dispose())
         this.species = [player]
-
-        enemy.accel = 6
 
         this.isEvolving = false
     }
