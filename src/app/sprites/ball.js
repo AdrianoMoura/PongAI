@@ -2,6 +2,7 @@ export default class Ball {
     constructor() {
         this.width = 20
         this.height = 20
+        this.timeSinceLastScore = p5.millis()
         this.reset()
     }
 
@@ -25,16 +26,27 @@ export default class Ball {
     }
 
     checkWallCollision() {
+        // If the game stalls in the same score for too many time
+        if ((p5.millis() - this.timeSinceLastScore) > 60 * 1000) {
+            generation.getActualSpecimen().die()
+            generation.goToNextSpecimen(() => {
+                gameController.startNew();
+            })
+        }
+
         if (this.pos.y < 0) {
             this.bounce(0, 1)
         } else if (this.pos.y > canvasHeight - this.height) {
             this.bounce(0, -1)
         } else if (this.pos.x < 10) {
             generation.getActualSpecimen().die()
-            generation.goToNextSpecimen()
+            generation.goToNextSpecimen(() => {
+                gameController.startNew();
+            })
         } else if (this.pos.x > canvasWidth - 10) {
             gameController.makePoint()
             gameController.startNew()
+            this.timeSinceLastScore = p5.millis()
         }
     }
 
@@ -71,5 +83,6 @@ export default class Ball {
         this.heading = p5.random(0, p5.TWO_PI)
         this.force = p5.createVector(-1, Math.sin(this.heading))
         this.force.mult(10)
+        this.timeSinceLastScore = p5.millis()
     }
 }

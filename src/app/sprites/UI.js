@@ -60,6 +60,7 @@ export default class UI {
             const population = data.population
             const arrayData = data.species.map(specimen => specimen.map(layer => Object.keys(layer).map(value => layer[value])))
             generation.runFromGenerationData(arrayData, generationNumber, population, Player)
+            gameController.startNew()
         });
     }
 }

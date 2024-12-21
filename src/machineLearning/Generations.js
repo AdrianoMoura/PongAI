@@ -30,7 +30,7 @@ export default class Generations {
         return selected
     }
 
-    evolve() {
+    evolve(callback) {
 
         this.isEvolving = true
         // Get and store the high score
@@ -77,10 +77,11 @@ export default class Generations {
 
         this.species = new_species
         this.actualSpecimenBeeingTrained = 0
-        gameController.startNew()
         this.isEvolving = false
 
         // end the evolving
+
+        callback();
         return
     }
 
@@ -88,16 +89,17 @@ export default class Generations {
         return this.species[this.actualSpecimenBeeingTrained]
     }
 
-    goToNextSpecimen() {
+    goToNextSpecimen(callback) {
         // go to next specimen
         if (this.actualSpecimenBeeingTrained < this.species.length - 1) {
             this.actualSpecimenBeeingTrained++
-            gameController.startNew()
+
+            callback();
 
             enemy.accel = 6
         } else {
             // If this training reaches the end of the specimen start the evolving
-            this.evolve()
+            this.evolve(callback)
         }
     }
 
@@ -137,7 +139,6 @@ export default class Generations {
 
         enemy.accel = 6
 
-        gameController.startNew()
         this.isEvolving = false
     }
 
@@ -171,7 +172,6 @@ export default class Generations {
         this.species.forEach(s => s.brain.dispose())
         this.species = species
 
-        gameController.startNew()
         this.isEvolving = false
     }
 }

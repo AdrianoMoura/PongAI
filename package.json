@@ -7,6 +7,9 @@
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
   },
+  "engines": {
+    "node": ">=8.17.0 <9.0.0"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
